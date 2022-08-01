@@ -47,6 +47,8 @@ def index():
     genre_names = list(genre_counts.index)
     ro_counts = df.sum()[['request', 'offer']]
     ro_names = ['Requests', 'Offers']
+    cat_counts = df.sum()[-36:]
+    cat_names = df.columns[-36:]
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -86,8 +88,26 @@ def index():
                     'title': "Message Type"
                 }
             }
+        },
+        {
+            'data': [
+                Bar(
+                    x=cat_names,
+                    y=cat_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Category Breakdown',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
         } #,
-    ]
+	]
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
