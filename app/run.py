@@ -7,7 +7,7 @@ from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from plotly.graph_objs import Bar, Pie
 import joblib #This may be system-dependent...
 #from sklearn.externals import joblib
 from sqlalchemy import create_engine
@@ -45,6 +45,8 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    ro_counts = df.sum()[['request', 'offer']]
+    ro_names = ['Requests', 'Offers']
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -66,7 +68,25 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
+        },
+        {
+            'data': [
+                Pie(
+                    labels=ro_names,
+                    values=ro_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Requests vs. Offers',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Message Type"
+                }
+            }
+        } #,
     ]
     
     # encode plotly graphs in JSON
