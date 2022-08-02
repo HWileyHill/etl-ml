@@ -36,6 +36,9 @@ def clean_data(df):
     df = df.drop('original', axis=1).dropna()
     for c in df.columns[3:]:
         df[c] = df[c].astype('int')
+        
+	#Last thing: remove rows that don't fit the binary pattern
+	df = df[df['related'] <= 1]
     
     #And that should do it!
     return df;
