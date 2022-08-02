@@ -1,6 +1,12 @@
 # Disaster Response Pipeline Project
 
-### Instructions:
+## Summary
+
+
+## File structure
+
+
+## Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -13,7 +19,7 @@
 
 3. If you are not running from the Project Workspace IDE, go to http://0.0.0.0:3001/ in your web browser.
 
-## If you are running from the Project Workspace IDE, follow steps 1 and 2 as above, and then do the following:
+### If you are running from the Project Workspace IDE, follow steps 1 and 2 as above, and then do the following:
 3. Open a new Terminal tab and run:
 	`env|grep WORK`
 	You will see a SPACEID and SPACEDOMAIN.  Make a note of them both.

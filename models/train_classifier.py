@@ -80,7 +80,7 @@ def build_model():
         ('clf', MultiOutputClassifier(estimator=KNeighborsClassifier()))
     ])
 
-    parameters_nn = {
+    parameters = {
         'clf__estimator__n_neighbors': [1, 3, 5, 7]
     }
 
