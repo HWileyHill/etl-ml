@@ -3,9 +3,17 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    #This function takes as arguments the filepaths
-    # for two CSV databases, reads them in, merges
-    # them, and returns the merged database.
+	'''
+	load_data
+    Read in two CSV databases and merge them into one dataframe.
+    
+    Input:
+    messages_filepath	The filepath to the first csv file.
+    categories_filepath	The filepath to the second csv file.
+    
+    Output:
+    df	The merged dataframe.
+    '''
     
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -15,8 +23,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    #This function cleans the database df,
-    # and returns the cleaned version.
+    '''
+    clean_data
+    Clean the dataframe in a predetermined, specialized manner.
+    
+    Input:
+    df	The unclean dataframe.
+    
+    Output:
+    df	The cleaned dataframe.
+    '''
     
     #First, split up the categories column
     categories = df['categories'].str.split(pat=';', expand=True)
@@ -45,8 +61,17 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    #This function saves the data to the specified database,
-    # returning nothing.
+	'''
+	save_data
+	Safe the data to the specified database.
+	
+	Input:
+	df					The dataframe to save.
+	database_filename	The filepath to save the dataframe to.
+	
+	Output:
+	None
+	'''
     
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('YourTableName', engine, index=False, if_exists='replace')

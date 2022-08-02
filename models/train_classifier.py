@@ -21,8 +21,18 @@ from sklearn.neighbors import KNeighborsClassifier
 from sqlalchemy import create_engine
 
 def load_data(database_filepath):
-    # Load in and separate the data.
-    # Return X, Y, category_names.
+	'''
+	load_data
+	Load in and separate the data.
+	
+	Input:
+	database_filepath	The filepath where the data is stored.
+	
+	Output:
+	X				The independent variable from the dataframe.
+	Y				The dependent variables from the dataframe.
+	category_names	A list of names of the dependent categories.
+	'''
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('YourTableName', engine)
     category_names = df.columns[-36:]
@@ -32,7 +42,16 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-    # Tokenize the data and return the tokens.
+	'''
+	tokenize
+    Tokenize the messages.
+    
+    Input:
+    text	The text to tokenize.
+    
+    Output:
+    clean_tokens	The tokens crated by the tokenization.
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
     
@@ -45,8 +64,16 @@ def tokenize(text):
 
 
 def build_model():
-    #Build and return a machine learning model.
-    # Don't train it or anything; later functions will do that.
+	'''
+	build_model
+    Build a machine learning model.  Later functions will train it.
+    
+    Input:
+    None
+    
+    Output:
+    model	The created model.
+    '''
     pipeline = Pipeline([
     ('vect', CountVectorizer(tokenizer=tokenize)),
     ('tfidf', TfidfTransformer()),
@@ -57,8 +84,19 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    #Evaluate the model on the test data; print the results.
-    # Return nothing.
+	'''
+	evaluate_model
+    Evaluate the model on the test data; print the results.
+    
+    Input:
+    model			The model to evaluate.
+    X_test			The independent part of the test data.
+    Y_test			The dependent part of the test data.
+    category_names	The names of the dependent categories.
+    
+    Output:
+    None
+    '''
     Y_pred = pd.DataFrame(data=model.predict(X_test), index=Y_test.index, columns=category_names)
 
     for c in category_names:
@@ -68,7 +106,17 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
-    # Save the model.  Return nothing.
+	'''
+	save_model
+    Save the model to a pickle file.
+    
+    Input:
+    model			The model to save.
+    model_filepath	The filepath to save the model to.
+    
+    Output:
+    None
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
     return
 
