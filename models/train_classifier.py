@@ -75,12 +75,17 @@ def build_model():
     model	The created model.
     '''
     pipeline = Pipeline([
-    ('vect', CountVectorizer(tokenizer=tokenize)),
-    ('tfidf', TfidfTransformer()),
-    ('clf', MultiOutputClassifier(estimator=KNeighborsClassifier()))
-])
+		('vect', CountVectorizer(tokenizer=tokenize)),
+		('tfidf', TfidfTransformer()),
+		('clf', MultiOutputClassifier(estimator=KNeighborsClassifier()))
+	])
 
-    return pipeline;
+	parameters_nn = {
+		'clf__estimator__n_neighbors': [1, 3, 5, 7]
+	}
+
+    return GridSearchCV(pipeline, param_grid=parameters)
+
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
@@ -131,7 +136,7 @@ def main():
         print('Building model...')
         model = build_model()
         
-        print('Training model...')
+        print('Training model... (note: this may take a while)')
         model.fit(X_train, Y_train)
         
         print('Evaluating model...')
