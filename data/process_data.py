@@ -3,8 +3,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-	'''
-	load_data
+    '''
+    load_data
     Read in two CSV databases and merge them into one dataframe.
     
     Input:
@@ -53,25 +53,25 @@ def clean_data(df):
     for c in df.columns[3:]:
         df[c] = df[c].astype('int')
         
-	#Last thing: remove rows that don't fit the binary pattern
-	df = df[df['related'] <= 1]
+    #Last thing: remove rows that don't fit the binary pattern
+    df = df[df['related'] <= 1]
     
     #And that should do it!
     return df;
 
 
 def save_data(df, database_filename):
-	'''
-	save_data
-	Safe the data to the specified database.
-	
-	Input:
-	df					The dataframe to save.
-	database_filename	The filepath to save the dataframe to.
-	
-	Output:
-	None
-	'''
+    '''
+    save_data
+    Safe the data to the specified database.
+
+    Input:
+    df					The dataframe to save.
+    database_filename	The filepath to save the dataframe to.
+
+    Output:
+    None
+    '''
     
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('YourTableName', engine, index=False, if_exists='replace')

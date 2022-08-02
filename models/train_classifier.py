@@ -14,25 +14,25 @@ from nltk.stem import WordNetLemmatizer
 import pickle
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.neighbors import KNeighborsClassifier
 from sqlalchemy import create_engine
 
 def load_data(database_filepath):
-	'''
-	load_data
-	Load in and separate the data.
-	
-	Input:
-	database_filepath	The filepath where the data is stored.
-	
-	Output:
-	X				The independent variable from the dataframe.
-	Y				The dependent variables from the dataframe.
-	category_names	A list of names of the dependent categories.
-	'''
+    '''
+    load_data
+    Load in and separate the data.
+    
+    Input:
+    database_filepath	The filepath where the data is stored.
+    
+    Output:
+    X				The independent variable from the dataframe.
+    Y				The dependent variables from the dataframe.
+    category_names	A list of names of the dependent categories.
+    '''
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('YourTableName', engine)
     category_names = df.columns[-36:]
@@ -42,8 +42,8 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-	'''
-	tokenize
+    '''
+    tokenize
     Tokenize the messages.
     
     Input:
@@ -64,8 +64,8 @@ def tokenize(text):
 
 
 def build_model():
-	'''
-	build_model
+    '''
+    build_model
     Build a machine learning model.  Later functions will train it.
     
     Input:
@@ -75,22 +75,22 @@ def build_model():
     model	The created model.
     '''
     pipeline = Pipeline([
-		('vect', CountVectorizer(tokenizer=tokenize)),
-		('tfidf', TfidfTransformer()),
-		('clf', MultiOutputClassifier(estimator=KNeighborsClassifier()))
-	])
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(estimator=KNeighborsClassifier()))
+    ])
 
-	parameters_nn = {
-		'clf__estimator__n_neighbors': [1, 3, 5, 7]
-	}
+    parameters_nn = {
+        'clf__estimator__n_neighbors': [1, 3, 5, 7]
+    }
 
     return GridSearchCV(pipeline, param_grid=parameters)
 
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-	'''
-	evaluate_model
+    '''
+    evaluate_model
     Evaluate the model on the test data; print the results.
     
     Input:
@@ -111,8 +111,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
-	'''
-	save_model
+    '''
+    save_model
     Save the model to a pickle file.
     
     Input:
