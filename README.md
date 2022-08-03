@@ -1,10 +1,25 @@
 # Disaster Response Pipeline Project
 
 ## Summary
+The DRP project is based on communications in disaster situations.  Because response time in these situations can mean the difference between life and death, it is important that these messages are noticed by the relevant parties as soon as possible, without irrelevant messages getting in the way, and for that they need to be categorized accordingly.
 
+Figure Eight has collated a large database of emergency messages, as well as the categories they fall into.  The purpose of the program is to process this data, analyze it, and use it to build a model that can categorize new emergency messages automatically.  The results are then showcased in a web app.
 
 ## File structure
-
+* App
+	* run.py - Code to start the app
+	* templates
+		* go.html - Classificaiton result page of web app
+		* master.html - Main page of web app
+* Data
+	* disaster_categories.csv - Category data from Figure Eight
+	* disaster_messages.csv - Message data from Figure Eight
+	* DisasterResponse.db (optional) - Where the processed data is stored
+	* process_data.py - Code to load and process the data
+* Models
+	* classifier.pkl (optional) - Where the trained model is stored
+	* train_classifier.py - Code to create and train a categorizing model
+* README.md - You are here!
 
 ## Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
